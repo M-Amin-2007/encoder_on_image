@@ -1,5 +1,6 @@
 """this module encodes and decodes a message in an image"""
 from PIL import Image
+import re
 
 def encode(message:str, image_adress:str, key=10):
     img = Image.open(image_adress)
@@ -15,9 +16,12 @@ def encode(message:str, image_adress:str, key=10):
                 r = ord(char)
                 img.putpixel((col, row), (r, g, b))
             else:
-                pass
-
-    img.save("sample.png")
+                break
+        else:
+            continue
+        break
+    save_adress = re.sub(r"\..+$", "_encoded.png", image_adress)
+    img.save(save_adress)
 
 if __name__ == "__main__":
     encode("amin", "sample.jpg")
