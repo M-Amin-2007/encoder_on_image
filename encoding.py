@@ -3,6 +3,7 @@ from PIL import Image
 import re
 
 def encode(message:str, image_adress:str, key=10):
+    key %= 100
     img = Image.open(image_adress)
     w, h = img.size
     counter = 0
@@ -23,7 +24,17 @@ def encode(message:str, image_adress:str, key=10):
     save_adress = re.sub(r"\..+$", "_encoded.png", image_adress)
     img.save(save_adress)
 
+def decode(image_adress:str, key=10):
+    key %= 100
+    message = str()
+    img = Image.open(image_adress)
+    w, h = img.size
+    for row in range(0, h, key):
+        for col in range(0, w, key):
+            if True:
+                r, g, b = img.getpixel((col, row))
+                print(chr(r), end=" |")
+            else:
+                pass
 if __name__ == "__main__":
-    encode("amin", "sample.jpg")
-    img = Image.open("sample.png")
-    print(chr(img.getpixel((40,0))[0]))
+    decode("sample.png")
