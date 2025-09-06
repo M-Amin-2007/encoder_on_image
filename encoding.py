@@ -23,6 +23,7 @@ def encode(message:str, image_adress:str, key=10):
         break
     save_adress = re.sub(r"\..+$", "_encoded.png", image_adress)
     img.save(save_adress)
+    img.close()
 
 def decode(image_adress:str, key=10):
     key %= 100
@@ -31,10 +32,13 @@ def decode(image_adress:str, key=10):
     w, h = img.size
     for row in range(0, h, key):
         for col in range(0, w, key):
-            if True:
-                r, g, b = img.getpixel((col, row))
-                print(chr(r), end=" |")
+            if message[-4:] != "$END":
+                r, _, _ = img.getpixel((col, row))
+                message += chr(r)
             else:
-                pass
+                img.close()
+                message = message.replace("$END", "")
+                return message
+
 if __name__ == "__main__":
-    decode("sample.png")
+    print(decode("sample.png"))
