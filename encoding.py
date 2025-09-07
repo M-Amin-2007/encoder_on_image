@@ -1,8 +1,12 @@
 """this module encodes and decodes a message in an image"""
-from PIL import Image
-import re, os
 
-def encode(message:str, image_adress:str, key=10)->str:
+import re
+import os
+from PIL import Image
+
+
+def encode(message: str, image_adress: str, key=10) -> str:
+    """encode the message on image"""
     key %= 100
     try:
         img = Image.open(image_adress)
@@ -35,7 +39,9 @@ def encode(message:str, image_adress:str, key=10)->str:
     img.close()
     return f"The opperation was successful.\n Image saved as '{save_adress}'"
 
-def decode(image_adress:str, key=10)-> str:
+
+def decode(image_adress: str, key=10) -> str:
+    """decode message on image"""
     key %= 100
     message = str()
     try:
@@ -52,7 +58,9 @@ def decode(image_adress:str, key=10)-> str:
                 img.close()
                 message = message.replace("$END", "")
                 return message
+    return None
+
 
 if __name__ == "__main__":
     print(encode("I am not the best", "sample.jpg"))
-    print(decode("sample_encoded.png")) 
+    print(decode("sample_encoded.png"))
