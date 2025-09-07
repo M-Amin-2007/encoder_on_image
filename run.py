@@ -6,6 +6,9 @@ while opperation != "e" and opperation != "d":
     opperation = input("if you want to encode press 'e' and if you want to decode press 'd': (e/d)").strip()
 
 if opperation == "e":
-    pass
+    msg = input("write the message you want to encode: ")
+    adress = input("paste the adress of the image that will have the message: ")
+    print("\n", encode(msg, adress))
 else:
-    pass
+    adress = input("paste the adress of the image you want to decode it: ")
+    print(decode(adress))
